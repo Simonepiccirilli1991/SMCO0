@@ -117,17 +117,16 @@ public class Iwdb0Client {
 //		.retrieve();
 //	}
 	
-	public Void updateStatus(int trxId, String status) {
+	private Void updateStatus(int trxId, String status) {
 		
 		StatusRequest request = new StatusRequest();
 		request.setTrxId(trxId);
 		request.setStatus(status);
 		
-		return webClient.post()
-				.uri("/ordini/update")
+		return webClient.put()
+				.uri("/ordini/update/"+trxId+"/"+status)
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(Mono.just(request), StatusRequest.class)
 				.retrieve()
 				.bodyToMono(Void.class).block();
 	}
