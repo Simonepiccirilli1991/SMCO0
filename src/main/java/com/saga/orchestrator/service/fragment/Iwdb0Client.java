@@ -20,7 +20,6 @@ public class Iwdb0Client {
 	private String iwdbUri = "http://localhost:8083";
 	WebClient webClient = WebClient.create(iwdbUri);
 
-	RestTemplate restService = new RestTemplate();
 	// transaction Prodotto
 	public ProdottiResponse transactProdotto(ProdottiRequest request,int trxId) {
 
