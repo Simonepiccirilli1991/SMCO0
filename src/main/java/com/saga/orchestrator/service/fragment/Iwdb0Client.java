@@ -1,10 +1,10 @@
 package com.saga.orchestrator.service.fragment;
 
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.saga.orchestrator.model.request.DispoRequest;
 import com.saga.orchestrator.model.request.ProdottiRequest;
@@ -16,8 +16,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class Iwdb0Client {
-
-	private String iwdbUri = "http://localhost:8083";
+	
+	@Value("${config.iwdb0.end-point}")
+	private String iwdbUri;
+	
 	WebClient webClient = WebClient.create(iwdbUri);
 
 	// transaction Prodotto
@@ -26,9 +28,10 @@ public class Iwdb0Client {
 		ProdottiResponse iResp = new ProdottiResponse();
 		Mono<ProdottiResponse> response = null;
 		
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "prodotti/transact").toUriString();
 		try {
 			response = webClient.post()
-					.uri("prodotti/transact")
+					.uri(uri)
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(Mono.just(request), ProdottiRequest.class)
@@ -55,9 +58,10 @@ public class Iwdb0Client {
 		ProdottiResponse iResp = new ProdottiResponse();
 		Mono<ProdottiResponse> response = null;
 
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "prodotti/rollb").toUriString();
 		try {
 			response = webClient.post()
-					.uri("prodotti/rollb")
+					.uri(uri)
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(Mono.just(request), ProdottiRequest.class)
@@ -78,10 +82,11 @@ public class Iwdb0Client {
 
 		DispoResponse iResp = new DispoResponse();
 		Mono<DispoResponse> response = null;
-
+		
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/dispo/transaction").toUriString();
 		try {
 			response = webClient.post()
-					.uri("/dispo/transaction")
+					.uri(uri)
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
 					.body(Mono.just(request), ProdottiRequest.class)
@@ -122,8 +127,10 @@ public class Iwdb0Client {
 		request.setTrxId(trxId);
 		request.setStatus(status);
 		
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/ordini/update/"+trxId+"/"+status).toUriString();
+		
 		return webClient.put()
-				.uri("/ordini/update/"+trxId+"/"+status)
+				.uri(uri)
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.retrieve()

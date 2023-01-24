@@ -1,0 +1,6 @@
+server:
+ port: 8089
+ 
+config:
+  iwdb0:
+    end-point: ${IWDB0_ENDPOINT}

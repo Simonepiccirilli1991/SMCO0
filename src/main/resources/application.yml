@@ -15,10 +15,10 @@ server:
   port: ${SERVER_PORT:8089}
   
   
-configuration:
+config:
 
-  wiam:
-   end-point-base: ${WIAM0_ENDPOINT:https://localhost:8083/wiam}
+  iwdb0:
+   end-point: ${IWDB0_ENDPOINT:https://localhost:8083}
    getAllAnagraficaWiam: ${WIAM0_GET_ANAG:https://localhost:8083/wiam/ag/get/{tiporicerca}/info/{valore}}
    
   cach0:
