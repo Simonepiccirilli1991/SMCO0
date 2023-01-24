@@ -23,7 +23,6 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - "spring.config.location=/config/application-docker.yml"
       - IWDB0_ENDPOINT=http://IWDB0:8083
       - SMOC0_ENDPOINT=http://SMOC0:8089
     image: iwdb-img
@@ -31,17 +30,13 @@ services:
       - app-net
     volumes:
       - data:/var/lib/h2
-      - ./config:/config
   SMOC0:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8089:8089"
-    volumes:
-      - ./config:/config
     environment:
-      - "spring.config.location=/config/application-docker.yml"
       - IWDB0_ENDPOINT=http://IWDB0:8083
     image: smoc-img
     networks:

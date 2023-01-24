@@ -28,7 +28,7 @@ public class Iwdb0Client {
 		ProdottiResponse iResp = new ProdottiResponse();
 		Mono<ProdottiResponse> response = null;
 		
-		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "prodotti/transact").toUriString();
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/prodotti/transact").toUriString();
 		try {
 			response = webClient.post()
 					.uri(uri)
@@ -58,7 +58,7 @@ public class Iwdb0Client {
 		ProdottiResponse iResp = new ProdottiResponse();
 		Mono<ProdottiResponse> response = null;
 
-		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "prodotti/rollb").toUriString();
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/prodotti/rollb").toUriString();
 		try {
 			response = webClient.post()
 					.uri(uri)
